@@ -19,11 +19,14 @@ if(command == "my-tweets") {
 	});
 } else if(command == "spotify-this-song") {
 	var song = process.argv[3];
+	if(song == undefined) {
+		song = "What's My Age Again";
+	}
 	spotify.search({ type: 'track', query: song }, function(err, data) {
 	    if (err) {
 	        console.log('Error occurred: ' + err);
 	        return;
-	    } 
+	    }
 	    var artist = data.tracks.items[0].artists[0].name;
 	    var songName = data.tracks.items[0].name;
 	    var album = data.tracks.items[0].album.name;
@@ -31,11 +34,6 @@ if(command == "my-tweets") {
 	    console.log(artist, songName, album, previewLink);
 	});
 
-	// not working - need to figure out how to handle no input for argv[3]
-	if(song == "") {
-		song = "What's My Age Again";
-	}
-	console.log(song);
 } else if(command == "movie-this") {
 	var movie = process.argv[3];
 	console.log(movie);
