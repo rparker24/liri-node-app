@@ -31,12 +31,30 @@ if(command == "my-tweets") {
 	    var songName = data.tracks.items[0].name;
 	    var album = data.tracks.items[0].album.name;
 	    var previewLink = data.tracks.items[0].preview_url;
-	    console.log(artist, songName, album, previewLink);
+	    console.log(artist);
+	    console.log(songName);
+	    console.log(album);
+	    console.log(previewLink);
 	});
 
 } else if(command == "movie-this") {
 	var movie = process.argv[3];
-	console.log(movie);
+	if(movie == undefined) {
+		movie = "Mr Nobody";
+	}
+	movie = movie.replace(' ', '+');
+	queryURL = 'http://www.omdbapi.com/?t=' + movie + '&plot=full&tomatoes=true&r=json';
+	request(queryURL, function(error, response, body) {
+		if (!error && response.statusCode == 200) {
+			console.log(body.title);
+			console.log(body.Year);
+			console.log(body.imdbRating);
+			console.log(body.Country);
+			console.log(body.Language);
+			console.log(body.Plot);
+			console.log(body.Actors);
+		}
+	});
 } else if(command == "do-what-it-says") {
 	fs.readFile('random.txt', 'utf-8', function(err, data) {
 
