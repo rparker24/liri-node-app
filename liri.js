@@ -3,8 +3,10 @@ var fs = require('fs');
 var request = require('request');
 var Twitter = require('twitter');
 var spotify = require('spotify');
+var moment = require('moment');
 
 var command = process.argv[2];
+var time = moment(new Date());
 
 var tweetKeys = new Twitter({
 	consumer_key: keys.twitterKeys.consumer_key,
@@ -90,6 +92,8 @@ if(command == "my-tweets") {
 	console.log("Command not recognized, please try again");
 }
 
-fs.appendFile('log.txt', command, 'utf-8', function() {
-	
+var logData = [(process.argv[2]), (process.argv[3]), time._i];
+
+fs.appendFile('log.txt', logData, 'utf-8', (err) => {
+	if(err) throw err;
 })
