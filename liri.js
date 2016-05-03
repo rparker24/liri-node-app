@@ -1,3 +1,4 @@
+// requirements
 var keys = require('./keys.js');
 var fs = require('fs');
 var request = require('request');
@@ -5,16 +6,18 @@ var Twitter = require('twitter');
 var spotify = require('spotify');
 var moment = require('moment');
 
+// variables
 var command = process.argv[2];
 var time = moment(new Date());
-
 var tweetKeys = new Twitter({
 	consumer_key: keys.twitterKeys.consumer_key,
 	consumer_secret: keys.twitterKeys.consumer_secret,
 	access_token_key: keys.twitterKeys.access_token_key,
 	access_token_secret: keys.twitterKeys.access_token_secret
 });
+var logData = [(process.argv[2]), (process.argv[3]), time._i];
 
+// functions
 function tweeter() {
 	var params = {screen_name: 'parkface13'};
 	tweetKeys.get('statuses/user_timeline', params, function(error, tweets, response){
@@ -68,6 +71,7 @@ function movieThis(movie) {
 	});
 };
 
+
 if(command == "my-tweets") {
 	tweeter();
 } else if(command == "spotify-this-song") {
@@ -91,8 +95,6 @@ if(command == "my-tweets") {
 } else {
 	console.log("Command not recognized, please try again");
 }
-
-var logData = [(process.argv[2]), (process.argv[3]), time._i];
 
 fs.appendFile('log.txt', logData, 'utf-8', (err) => {
 	if(err) throw err;
